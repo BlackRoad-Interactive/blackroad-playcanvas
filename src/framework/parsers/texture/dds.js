@@ -37,7 +37,9 @@ class DdsParser extends TextureParser {
         const isFourCc = header[20] === 4;
         const fcc = header[21];
         const bpp = header[22];
-        const isCubemap = header[28] === 65024; // TODO: check by bitflag
+        // DDSCAPS2_CUBEMAP flag in dwCaps2 field indicates a cubemap texture
+        const DDSCAPS2_CUBEMAP = 0x200;
+        const isCubemap = (header[28] & DDSCAPS2_CUBEMAP) !== 0;
 
         const FCC_DXT1 = 827611204; // DXT1
         const FCC_DXT5 = 894720068; // DXT5
